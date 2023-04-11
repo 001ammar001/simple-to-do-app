@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add task</title>
+
+    <style>
+        body {
+            background-color: blanchedalmond;
+        }
+        a{
+            font-size: 20px;
+            color: black;
+            font-weight: bolder;
+            text-decoration: none;
+        }
+        .custom_form{
+            left      : 50%;
+            top       : 50%;
+            position  : absolute;
+            transform : translate(-50%, -50%);
+            text-align: center;
+            background-color: pink;
+            min-height: 20%;
+            min-width: 20%;
+            padding: 10px;
+        }
+        .suc {
+            text-align: center;
+            font-size: large;
+            font-weight: bold;
+            color: red;
+        }
+        .banner {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 10px;
+            background-color: pink;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="banner">
+        <a href="{% url 'core:main' %}">{{request.user.username}}</a>
+        <a href="{% url 'core:add-task' %}">add task</a>
+        <a href="{% url 'core:succsess-tasks' %}">sucsses tasks</a>
+        <a href="{% url 'core:archived-tasks' %}">archived tasks</a>
+        <a href="{% url 'core:overdue-tasks' %}">overdue tasks</a>
+        <a href="{% url 'core:logout' %}">logout</a>
+    </div>
+
+    <div class="custom_form styling">
+        {% if messages %}
+            {% for message in messages %}
+            <p class="suc" >{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <form action="{% url 'core:add-task' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="title"><br><br>
+            <textarea name="body" style="resize:none" cols="50" rows="10" placeholder="body"></textarea><br><br>
+            <input type="datetime-local" name="date" placeholder="date"><br><br>
+            <input type="submit">
+        </form>
+    </div>
+</body>
+</html>
